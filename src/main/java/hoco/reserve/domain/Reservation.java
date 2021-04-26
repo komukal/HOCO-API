@@ -13,10 +13,10 @@ import javax.persistence.ManyToOne;
 
 public class Reservation {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private String apartment, bookingDate;
-	private Date reservationDate, startTime, endTime;
+	private String apartment, bookedBy;
+	private Date bookingDate, startTime, endTime;
 	private Boolean invoiced;
 
 	@ManyToOne
@@ -27,15 +27,27 @@ public class Reservation {
 	public Reservation() {
 	}
 
-	public Reservation(String apartment, String bookedBy, String bookingDate, Date reservationDate, Date startTime,
+	public Reservation(String apartment, String bookedBy, Date bookingDate, Date reservationDate, Date startTime,
 			Date endTime, Boolean invoiced) {
 		super();
 		this.apartment = apartment;
 		this.bookingDate = bookingDate;
-		this.reservationDate = reservationDate;
+		this.bookedBy = bookedBy;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.invoiced = invoiced;
+	}
+
+	public String getBookedBy() {
+		return bookedBy;
+	}
+
+	public void setBookedBy(String bookedBy) {
+		this.bookedBy = bookedBy;
+	}
+
+	public void setBookingDate(Date bookingDate) {
+		this.bookingDate = bookingDate;
 	}
 
 	public Long getId() {
@@ -58,20 +70,8 @@ public class Reservation {
 		this.apartment = apartment;
 	}
 
-	public String getBookingDate() {
+	public Date getBookingDate() {
 		return bookingDate;
-	}
-
-	public void setBookingDate(String bookingDate) {
-		this.bookingDate = bookingDate;
-	}
-
-	public Date getReservationDate() {
-		return reservationDate;
-	}
-
-	public void setReservationDate(Date reservationDate) {
-		this.reservationDate = reservationDate;
 	}
 
 	public Date getStartTime() {
@@ -105,7 +105,5 @@ public class Reservation {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-
-
 
 }
