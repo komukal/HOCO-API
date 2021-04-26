@@ -2,33 +2,34 @@ package hoco.reserve.domain;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 
 public class Reservation {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "reservationId", nullable = false, updatable = false)
-	private Long id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
 	private String apartment, bookingDate;
 	private Date reservationDate, startTime, endTime;
 	private Boolean invoiced;
 
-	// private Room room;
+	@ManyToOne
+	@JoinColumn(name = "roomid")
+	private Room room;
 
 	// Constructors, getters ,setters
 	public Reservation() {
 	}
 
-	public Reservation(Long id, String apartment, String bookedBy, String bookingDate, Date reservationDate,
-			Date startTime, Date endTime, Boolean invoiced) {
+	public Reservation(String apartment, String bookedBy, String bookingDate, Date reservationDate, Date startTime,
+			Date endTime, Boolean invoiced) {
 		super();
-		this.id = id;
 		this.apartment = apartment;
 		this.bookingDate = bookingDate;
 		this.reservationDate = reservationDate;
@@ -39,6 +40,10 @@ public class Reservation {
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public void setId(Long id) {
@@ -93,11 +98,14 @@ public class Reservation {
 		this.invoiced = invoiced;
 	}
 
-	@Override
-	public String toString() {
-		return "Reservation [id=" + id + ", apartment=" + apartment + ", bookingDate=" + bookingDate
-				+ ", reservationDate=" + reservationDate + ", startTime=" + startTime + ", endTime=" + endTime
-				+ ", invoiced=" + invoiced + "]";
+	public Room getRoom() {
+		return room;
 	}
+
+	public void setRoom(Room room) {
+		this.room = room;
+	}
+
+
 
 }

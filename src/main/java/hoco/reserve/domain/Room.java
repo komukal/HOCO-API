@@ -1,10 +1,16 @@
 package hoco.reserve.domain;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Room {
@@ -16,6 +22,10 @@ public class Room {
 	private String roomName, roomDescription, openTime, closeTime;
 	private int maxReservationTime, minReservationTime;
 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
+	@JsonIgnore
+	private List<Reservation> reservations;	
+	
 	public Room() {
 	}
 
@@ -82,11 +92,18 @@ public class Room {
 		return roomId;
 	}
 
-	@Override
-	public String toString() {
-		return "Room [roomId=" + roomId + ", roomName=" + roomName + ", roomDescription=" + roomDescription
-				+ ", openTime=" + openTime + ", closeTime=" + closeTime + ", maxReservationTime=" + maxReservationTime
-				+ ", minReservationTime=" + minReservationTime + "]";
+	public List<Reservation> getReservations() {
+		return reservations;
 	}
+
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+
+	public void setRoomId(Long roomId) {
+		this.roomId = roomId;
+	}
+
+
 
 }
